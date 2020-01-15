@@ -20,6 +20,7 @@ body {
 .link {
     color: #1473e6;
     text-decoration: none;
+    cursor: pointer;
 
     transition: color 0.2s ease;
 }

@@ -19,13 +19,12 @@ export default class LoginForm extends Component {
                     <h2 className='form-title'>Войти</h2>
                     <p className='form-text'>
                         Новый пользователь?
-                        <a
+                        <span
                             className='form-link link'
-                            href='#'
                             onClick={this.onRegisterPage}
                         >
                             Зарегистрируйтесь
-                        </a>
+                        </span>
                     </p>
 
                     <input

@@ -1,11 +1,17 @@
 import React from 'react';
+import Menu from '../Menu/Menu';
 import './Header.css';
+import logoImg from './logo.png';
 
-const Header = () => {
+const Header = props => {
     return (
-        <header class='Header'>
-            <div>Logo</div>
-            <div>Menu</div>
+        <header className='Header'>
+            <div className='Header__content'>
+                <div className='Header__logo'>
+                    <img src={logoImg} alt='Logo' />
+                </div>
+                <Menu onPageChange={props.onPageChange} />
+            </div>
         </header>
     );
 };

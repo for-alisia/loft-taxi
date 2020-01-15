@@ -1,0 +1,11 @@
+.Menu {
+}
+
+.Menu__item {
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    margin: 0 2rem;
+    font-size: 1.6rem;
+}

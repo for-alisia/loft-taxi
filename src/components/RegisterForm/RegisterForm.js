@@ -22,13 +22,12 @@ export default class RegisterForm extends Component {
                     <h2 className='form-title'>Регистрация</h2>
                     <p className='form-text'>
                         Уже зарегистрирован?
-                        <a
+                        <span
                             className='form-link link'
-                            href='#'
                             onClick={this.onLoginPage}
                         >
                             Войти
-                        </a>
+                        </span>
                     </p>
                     <input
                         className='RegisterForm__input form-input'
