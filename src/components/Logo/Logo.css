@@ -1,0 +1,16 @@
+.Logo {
+    width: 50%;
+    text-align: center;
+    animation: moveToRight 0.5s ease;
+}
+
+@keyframes moveToRight {
+    0% {
+        transform: translateX(-60rem);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 100%;
+    }
+}

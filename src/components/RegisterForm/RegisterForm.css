@@ -1,0 +1,14 @@
+.RegisterForm {
+    width: 50%;
+}
+
+.RegisterForm__short-input-wrapper {
+    display: inline-block;
+    max-width: 50%;
+    padding-right: 1rem;
+}
+
+.RegisterForm__short-input-wrapper:last-child {
+    padding-right: 0;
+    padding-left: 1rem;
+}
