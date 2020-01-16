@@ -7,7 +7,7 @@ const MapPage = props => {
     return (
         <div className='MapPage'>
             <MainMap />
-            <Header onPageChange={props.onPageChange} />
+            <Header onPageChange={props.onPageChange} page='MapPage' />
         </div>
     );
 };

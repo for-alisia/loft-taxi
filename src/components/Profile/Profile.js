@@ -6,7 +6,7 @@ import './Profile.css';
 const Profile = props => {
     return (
         <div className='Profile city'>
-            <Header onPageChange={props.onPageChange} />
+            <Header onPageChange={props.onPageChange} page='Profile' />
             <ProfileCard onPageChange={props.onPageChange} />
         </div>
     );

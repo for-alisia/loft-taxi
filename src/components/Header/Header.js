@@ -10,7 +10,7 @@ const Header = props => {
                 <div className='Header__logo'>
                     <img src={logoImg} alt='Logo' />
                 </div>
-                <Menu onPageChange={props.onPageChange} />
+                <Menu onPageChange={props.onPageChange} page={props.page} />
             </div>
         </header>
     );

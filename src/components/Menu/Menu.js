@@ -16,9 +16,13 @@ export default class Menu extends Component {
 
     render() {
         const menuItems = this.items.map(({ name, page }) => {
+            let clazz = 'Menu__item';
+            if (this.props.page === page) {
+                clazz += ' active';
+            }
             return (
                 <button
-                    className='Menu__item'
+                    className={clazz}
                     key={page}
                     data-page={page}
                     onClick={this.changePage}
