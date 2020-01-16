@@ -7,7 +7,7 @@ const Profile = props => {
     return (
         <div className='Profile city'>
             <Header onPageChange={props.onPageChange} />
-            <ProfileCard />
+            <ProfileCard onPageChange={props.onPageChange} />
         </div>
     );
 };
