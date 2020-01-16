@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import './LoginForm.css';
 
 export default class LoginForm extends Component {
+    state = {
+        loginName: '',
+        loginPassword: ''
+    };
+
     onSubmit = e => {
         e.preventDefault();
         this.props.onPageChange('MapPage');
@@ -10,6 +15,10 @@ export default class LoginForm extends Component {
     onRegisterPage = e => {
         e.preventDefault();
         this.props.onPageChange('Register');
+    };
+
+    onInputChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
     };
 
     render() {
@@ -32,6 +41,8 @@ export default class LoginForm extends Component {
                         type='text'
                         placeholder='Введите имя пользователя'
                         id='loginName'
+                        onChange={this.onInputChange}
+                        value={this.state.loginName}
                     />
                     <label
                         className='LoginForm__label form-label'
@@ -45,6 +56,8 @@ export default class LoginForm extends Component {
                         type='password'
                         placeholder='Введите пароль'
                         id='loginPassword'
+                        onChange={this.onInputChange}
+                        value={this.state.loginPassword}
                     />
                     <label
                         className='LoginForm__label form-label'

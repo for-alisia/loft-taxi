@@ -6,25 +6,19 @@ import Register from '../Register/Register';
 import './App.css';
 
 export default class extends Component {
-    route = [
-        ['Login', Login],
-        ['MapPage', MapPage],
-        ['Profile', Profile],
-        ['Register', Register]
-    ];
+    route = [{ Login }, { MapPage }, { Profile }, { Register }];
 
     state = {
-        page: Login
+        page: Login // initial page
     };
 
     onPageChange = page => {
-        const comp = this.definePage(page);
-        this.setState({ page: comp });
+        this.setState({ page: this.definePage(page) });
     };
 
     definePage(page) {
-        const [comp] = this.route.filter(el => el[0] === page);
-        return comp[1];
+        const [comp] = this.route.filter(el => el[page]);
+        return comp[page];
     }
 
     render() {

@@ -1,8 +1,15 @@
 import React from 'react';
+import Header from '../Header/Header';
+import ProfileCard from '../ProfileCard/ProfileCard.js';
 import './Profile.css';
 
-const Profile = () => {
-    return <div className='Profile'>Profile</div>;
+const Profile = props => {
+    return (
+        <div className='Profile city'>
+            <Header onPageChange={props.onPageChange} />
+            <ProfileCard />
+        </div>
+    );
 };
 
 export default Profile;

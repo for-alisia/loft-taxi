@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import './RegisterForm.css';
 
 export default class RegisterForm extends Component {
+    state = {
+        registerMail: '',
+        registerName: '',
+        registerSurname: '',
+        registerPassword: ''
+    };
     onSubmit = e => {
         e.preventDefault();
         this.props.onPageChange('MapPage');
@@ -10,6 +16,10 @@ export default class RegisterForm extends Component {
     onLoginPage = e => {
         e.preventDefault();
         this.props.onPageChange('Login');
+    };
+
+    onInputChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
     };
 
     render() {
@@ -33,11 +43,13 @@ export default class RegisterForm extends Component {
                         className='RegisterForm__input form-input'
                         type='text'
                         placeholder='Введите адрес электронной почты'
-                        id='RegisterMail'
+                        id='registerMail'
+                        onChange={this.onInputChange}
+                        value={this.state.registerMail}
                     />
                     <label
                         className='RegisterForm__label form-label'
-                        htmlFor='RegisterMail'
+                        htmlFor='registerMail'
                     >
                         Адрес электронной почты
                     </label>
@@ -47,11 +59,13 @@ export default class RegisterForm extends Component {
                                 className='RegisterForm__input form-input '
                                 type='text'
                                 placeholder='Ваше имя'
-                                id='RegisterName'
+                                id='registerName'
+                                onChange={this.onInputChange}
+                                value={this.state.registerName}
                             />
                             <label
                                 className='RegisterForm__label form-label '
-                                htmlFor='RegisterName'
+                                htmlFor='registerName'
                             >
                                 Ваше имя
                             </label>
@@ -62,11 +76,13 @@ export default class RegisterForm extends Component {
                                 className='RegisterForm__input form-input '
                                 type='text'
                                 placeholder='Ваша фамилия'
-                                id='RegisterSurname'
+                                id='registerSurname'
+                                onChange={this.onInputChange}
+                                value={this.state.registerSurname}
                             />
                             <label
                                 className='RegisterForm__label form-label '
-                                htmlFor='RegisterSurname'
+                                htmlFor='registerSurname'
                             >
                                 Ваша фамилия
                             </label>
@@ -77,11 +93,13 @@ export default class RegisterForm extends Component {
                         className='RegisterForm__input form-input'
                         type='password'
                         placeholder='Придумайте пароль'
-                        id='RegisterPassword'
+                        id='registerPassword'
+                        onChange={this.onInputChange}
+                        value={this.state.registerPassword}
                     />
                     <label
                         className='RegisterForm__label form-label'
-                        htmlFor='RegisterPassword'
+                        htmlFor='registerPassword'
                     >
                         Пароль
                     </label>
