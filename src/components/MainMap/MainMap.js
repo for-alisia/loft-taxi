@@ -1,5 +1,5 @@
 import React from 'react';
-import './MainMap.css';
+import './MainMap.scss';
 import mapBg from './map_bg.png';
 
 const MainMap = () => {

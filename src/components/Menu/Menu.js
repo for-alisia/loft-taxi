@@ -1,36 +1,34 @@
 import React, { Component } from 'react';
-import './Menu.css';
+import { route } from '../../helpers/config';
+import './Menu.scss';
 
 export default class Menu extends Component {
-    items = [
-        { name: 'Карта', page: 'MapPage' },
-        { name: 'Профиль', page: 'Profile' },
-        { name: 'Выйти', page: 'Login' }
-    ];
-
-    changePage = e => {
+    handleChangePage = e => {
         e.preventDefault();
         const page = e.target.dataset.page;
         this.props.onPageChange(page);
     };
 
     render() {
-        const menuItems = this.items.map(({ name, page }) => {
-            let clazz = 'Menu__item';
-            if (this.props.page === page) {
-                clazz += ' active';
+        const menuItems = Object.keys(route).map(item => {
+            const { label, name } = route[item];
+            let className = ['Menu__item'];
+            if (this.props.page === name) {
+                className.push('active');
             }
+
             return (
                 <button
-                    className={clazz}
-                    key={page}
-                    data-page={page}
-                    onClick={this.changePage}
+                    className={className.join(' ')}
+                    key={name}
+                    data-page={name}
+                    onClick={this.handleChangePage}
                 >
-                    {name}
+                    {label}
                 </button>
             );
         });
+
         return <nav className='Menu'>{menuItems}</nav>;
     }
 }

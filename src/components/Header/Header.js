@@ -1,6 +1,6 @@
 import React from 'react';
-import Menu from '../Menu/Menu';
-import './Header.css';
+import Menu from '../Menu';
+import './Header.scss';
 import logoImg from './logo.png';
 
 const Header = props => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './RegisterForm.css';
+import './RegisterForm.scss';
 
 export default class RegisterForm extends Component {
     state = {
@@ -15,7 +15,7 @@ export default class RegisterForm extends Component {
 
     onLoginPage = e => {
         e.preventDefault();
-        this.props.onPageChange('Login');
+        this.props.onFormChange();
     };
 
     onInputChange = e => {
