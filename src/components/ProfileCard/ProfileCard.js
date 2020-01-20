@@ -20,7 +20,7 @@ export default class ProfileCard extends Component {
 
     render() {
         const {
-            propfileCardNumber,
+            profileCardNumber,
             profileCardDateExpire,
             profileCardName,
             profileCardCVC
