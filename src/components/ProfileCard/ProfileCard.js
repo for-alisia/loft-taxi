@@ -19,6 +19,12 @@ export default class ProfileCard extends Component {
     };
 
     render() {
+        const {
+            propfileCardNumber,
+            profileCardDateExpire,
+            profileCardName,
+            profileCardCVC
+        } = this.state;
         return (
             <div className='ProfileCard'>
                 <form
@@ -40,7 +46,7 @@ export default class ProfileCard extends Component {
                                 placeholder='Введите номер карты'
                                 id='profileCardNumber'
                                 onChange={this.onInputChange}
-                                value={this.state.profileCardNumber}
+                                value={profileCardNumber}
                             />
                             <label
                                 className='ProfileCard__label form-label'
@@ -54,7 +60,7 @@ export default class ProfileCard extends Component {
                                 placeholder='Срок действия'
                                 id='profileCardDateExpire'
                                 onChange={this.onInputChange}
-                                value={this.state.profileCardDateExpire}
+                                value={profileCardDateExpire}
                             />
                             <label
                                 className='ProfileCard__label form-label'
@@ -70,7 +76,7 @@ export default class ProfileCard extends Component {
                                 placeholder='Введите имя владельца'
                                 id='profileCardName'
                                 onChange={this.onInputChange}
-                                value={this.state.profileCardName}
+                                value={profileCardName}
                             />
                             <label
                                 className='ProfileCard__label form-label'
@@ -84,7 +90,7 @@ export default class ProfileCard extends Component {
                                 placeholder='CVC'
                                 id='profileCardCVC'
                                 onChange={this.onInputChange}
-                                value={this.state.profileCardCVC}
+                                value={profileCardCVC}
                             />
                             <label
                                 className='ProfileCard__label form-label'

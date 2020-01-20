@@ -23,6 +23,12 @@ export default class RegisterForm extends Component {
     };
 
     render() {
+        const {
+            registerMail,
+            registerName,
+            registerSurname,
+            registerPassword
+        } = this.state;
         return (
             <div className='RegisterForm'>
                 <form
@@ -45,7 +51,7 @@ export default class RegisterForm extends Component {
                         placeholder='Введите адрес электронной почты'
                         id='registerMail'
                         onChange={this.onInputChange}
-                        value={this.state.registerMail}
+                        value={registerMail}
                     />
                     <label
                         className='RegisterForm__label form-label'
@@ -61,7 +67,7 @@ export default class RegisterForm extends Component {
                                 placeholder='Ваше имя'
                                 id='registerName'
                                 onChange={this.onInputChange}
-                                value={this.state.registerName}
+                                value={registerName}
                             />
                             <label
                                 className='RegisterForm__label form-label '
@@ -78,7 +84,7 @@ export default class RegisterForm extends Component {
                                 placeholder='Ваша фамилия'
                                 id='registerSurname'
                                 onChange={this.onInputChange}
-                                value={this.state.registerSurname}
+                                value={registerSurname}
                             />
                             <label
                                 className='RegisterForm__label form-label '
@@ -95,7 +101,7 @@ export default class RegisterForm extends Component {
                         placeholder='Придумайте пароль'
                         id='registerPassword'
                         onChange={this.onInputChange}
-                        value={this.state.registerPassword}
+                        value={registerPassword}
                     />
                     <label
                         className='RegisterForm__label form-label'
