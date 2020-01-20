@@ -1,0 +1,16 @@
+.Menu__item {
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 0.5rem;
+
+    font-size: 1.6rem;
+
+    margin: 0 2rem;
+    padding: 0.8rem 1.5rem;
+}
+
+.Menu__item.active {
+    background-color: #f2f2f2;
+}
