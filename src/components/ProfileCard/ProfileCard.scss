@@ -30,7 +30,7 @@
         display: flex;
         justify-content: space-between;
 
-        margin-bottom: rem(4);
+        margin-bottom: 2rem;
     }
 
     &__submit {
@@ -63,6 +63,14 @@
 
     padding: rem(50) rem(30) rem(20) rem(30);
 
+    .form-input-wrapper {
+        margin-bottom: rem(25);
+    }
+
+    .form-input-wrapper:nth-child(2) {
+        width: 50%;
+    }
+
     &--front:after {
         content: '';
         display: block;
@@ -73,9 +81,16 @@
         height: rem(24);
 
         background-image: url('./mastercard.png');
+        background-size: cover;
     }
 
     &--back {
         margin-left: rem(32);
     }
+}
+
+.cvv-input {
+    background-image: url('./visibility-24px.svg');
+    background-position: right center;
+    background-repeat: no-repeat;
 }

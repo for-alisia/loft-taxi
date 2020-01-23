@@ -108,8 +108,64 @@ const formRegisterData = {
     ]
 };
 
+const formCardData = {
+    title: 'Способы оплаты',
+    subtitle: 'Заполните данные карты для оплаты',
+    submitLabel: 'Сохранить',
+    inputs: [
+        {
+            type: 'text',
+            placeholder: 'Введите номер карты',
+            label: 'Номер карты',
+            validation: {
+                cardNumber: true
+            },
+            id: 1,
+            name: 'cardNumber',
+            errorMsg: 'Введите корректный номер карты'
+        },
+        {
+            type: 'text',
+            placeholder: 'Срок действия',
+            label: 'Срок действия',
+            validation: {
+                date: true
+            },
+            id: 2,
+            name: 'expireDate',
+            errorMsg: 'Укажите дату в формате ММ.ГГ'
+        },
+        {
+            type: 'text',
+            placeholder: 'Имя владельца карты',
+            label: 'Имя владельца карты',
+            id: 3,
+            name: 'ownerName'
+        },
+        {
+            type: 'password',
+            placeholder: 'CVV',
+            label: 'CVV',
+            validation: {
+                length: 3
+            },
+            id: 4,
+            name: 'cvv',
+            errorMsg: 'Введите CVV с обратной стороны карты',
+            classes: 'cvv-input'
+        }
+    ]
+};
+
 const formOrderData = {
     submitLabel: 'Вызвать такси'
 };
 
-export { route, initialPage, formLoginData, formRegisterData, formOrderData };
+export {
+    route,
+    initialPage,
+    formLoginData,
+    formRegisterData,
+    formOrderData,
+    formCardData
+};

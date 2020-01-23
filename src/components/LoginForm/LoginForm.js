@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formLoginData, formRegisterData } from '../../helpers/config';
 import Input from '../Input';
 import { AuthContext } from '../../helpers/context';
-import { validateInput } from '../../helpers/functions';
+import { updateStateInputs, validateInput } from '../../helpers/functions';
 import './LoginForm.scss';
 
 export default class LoginForm extends Component {
@@ -13,8 +13,8 @@ export default class LoginForm extends Component {
             data: formLoginData
         };
 
-        this.updateStateInputs(formLoginData, this.state);
-        this.updateStateInputs(formRegisterData, this.state);
+        updateStateInputs(formLoginData, this.state);
+        updateStateInputs(formRegisterData, this.state);
     }
 
     static contextType = AuthContext;
@@ -22,16 +22,6 @@ export default class LoginForm extends Component {
     static propTypes = {
         onPageChange: PropTypes.func
     };
-
-    updateStateInputs({ inputs }, obj) {
-        inputs.forEach(input => {
-            obj[input.name] = input;
-            obj[input.name]['value'] = '';
-            obj[input.name]['isValid'] = obj[input.name].validation
-                ? false
-                : true;
-        });
-    }
 
     handleSubmit = e => {
         e.preventDefault();
@@ -47,7 +37,7 @@ export default class LoginForm extends Component {
 
         console.log(isValid);
 
-        // this.props.onPageChange('MapPage');
+        this.props.onPageChange('MapPage');
     };
 
     handleChangeForm = e => {
@@ -73,16 +63,7 @@ export default class LoginForm extends Component {
     };
 
     handleInputBlur(e, name) {
-        const { value, validation } = this.state[name];
-        const isValid = validateInput(value, validation);
-        const currentInput = { ...this.state[name] };
-        if (!isValid) {
-            currentInput.hasError = true;
-            currentInput.isvalid = false;
-        } else {
-            currentInput.hasError = false;
-            currentInput.isValid = true;
-        }
+        const currentInput = validateInput(this.state[name]);
 
         this.setState({
             [name]: currentInput
