@@ -1,0 +1,57 @@
+// Forms
+
+.form {
+    max-width: rem(500);
+    display: flex;
+    flex-direction: column;
+    background-color: $color-white;
+    padding: rem(60) rem(55);
+    border-radius: rem(5);
+
+    @include respond(tab-port) {
+        max-width: 100%;
+    }
+
+    .form-submit {
+        display: inline-block;
+        align-self: flex-end;
+
+        padding: rem(16) rem(35);
+
+        background-color: $color-orange;
+        border: none;
+        outline: none;
+        border-radius: rem(5);
+        cursor: pointer;
+
+        font-size: rem(21);
+
+        transition: all 0.2s ease;
+        transform: translateY(0);
+
+        @include respond(tab-port) {
+            align-self: center;
+            font-size: rem(18);
+        }
+    }
+
+    .form-submit:hover {
+        background-color: $color-orange-dark;
+
+        transform: translateY(2px);
+    }
+
+    .form-title {
+        font-size: rem(36);
+        font-weight: normal;
+        margin-bottom: rem(25);
+    }
+
+    .form-text {
+        margin-bottom: rem(35);
+    }
+
+    .form-link {
+        margin-left: rem(10);
+    }
+}

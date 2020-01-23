@@ -1,0 +1,16 @@
+@import '../../scss/abstracts.scss';
+.OrderForm {
+    position: absolute;
+    top: 15%;
+    left: rem(100);
+
+    min-width: 30%;
+
+    &__form.form {
+        padding: rem(40);
+    }
+
+    &__form-submit.form-submit {
+        align-self: stretch;
+    }
+}

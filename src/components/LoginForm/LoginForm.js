@@ -1,75 +1,164 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { formLoginData, formRegisterData } from '../../helpers/config';
+import Input from '../Input';
+import { AuthContext } from '../../helpers/context';
+import { validateInput } from '../../helpers/functions';
 import './LoginForm.scss';
 
 export default class LoginForm extends Component {
-    state = {
-        loginName: '',
-        loginPassword: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: formLoginData
+        };
+
+        this.updateStateInputs(formLoginData, this.state);
+        this.updateStateInputs(formRegisterData, this.state);
+    }
+
+    static contextType = AuthContext;
+
+    static propTypes = {
+        onPageChange: PropTypes.func
     };
 
-    onSubmit = e => {
+    updateStateInputs({ inputs }, obj) {
+        inputs.forEach(input => {
+            obj[input.name] = input;
+            obj[input.name]['value'] = '';
+            obj[input.name]['isValid'] = obj[input.name].validation
+                ? false
+                : true;
+        });
+    }
+
+    handleSubmit = e => {
         e.preventDefault();
-        this.props.onPageChange('MapPage');
+
+        let isValid = true;
+        const currentForm = this.state.data;
+        const inputs = currentForm.inputs.map(({ name }) => name);
+        inputs.forEach(name => {
+            if (!this.state[name].isValid) {
+                isValid = false;
+            }
+        });
+
+        console.log(isValid);
+
+        // this.props.onPageChange('MapPage');
     };
 
-    onRegisterPage = e => {
+    handleChangeForm = e => {
         e.preventDefault();
-        this.props.onFormChange();
+        this.setState(prevState => {
+            const newData =
+                prevState.data === formLoginData
+                    ? formRegisterData
+                    : formLoginData;
+
+            return {
+                data: newData
+            };
+        });
     };
 
-    onInputChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
+    handleInputChange = (e, name) => {
+        const currentInput = { ...this.state[name] };
+        currentInput.value = e.target.value;
+        this.setState({
+            [name]: currentInput
+        });
     };
+
+    handleInputBlur(e, name) {
+        const { value, validation } = this.state[name];
+        const isValid = validateInput(value, validation);
+        const currentInput = { ...this.state[name] };
+        if (!isValid) {
+            currentInput.hasError = true;
+            currentInput.isvalid = false;
+        } else {
+            currentInput.hasError = false;
+            currentInput.isValid = true;
+        }
+
+        this.setState({
+            [name]: currentInput
+        });
+    }
 
     render() {
-        const { loginName, loginPassword } = this.state;
+        const {
+            title,
+            subtitle,
+            linkText,
+            submitLabel,
+            inputs
+        } = this.state.data;
+
+        const formInputs = inputs.map(({ name }) => {
+            const {
+                type,
+                placeholder,
+                label,
+                id,
+                value,
+                errorMsg,
+                hasError,
+                validation
+            } = this.state[name];
+            return (
+                <Input
+                    type={type}
+                    placeholder={placeholder}
+                    label={label}
+                    key={id}
+                    name={name}
+                    value={value}
+                    onInputChange={e => this.handleInputChange(e, name)}
+                    errorMsg={errorMsg}
+                    onBlur={e => this.handleInputBlur(e, name)}
+                    hasError={hasError}
+                    validation={validation}
+                />
+            );
+        });
+
+        const registerFormClass =
+            this.state.data === formRegisterData ? 'register-form' : '';
+
+        const { isLogined } = this.context;
+
         return (
             <div className='LoginForm'>
-                <form className='LoginForm__form form' onSubmit={this.onSubmit}>
-                    <h2 className='form-title'>Войти</h2>
+                <form
+                    className='LoginForm__form form'
+                    onSubmit={this.handleSubmit}
+                >
+                    <h2 className='form-title'>{title}</h2>
+                    <span>
+                        {isLogined ? 'Вы залогинены' : 'Вы не залогинены'}
+                    </span>
                     <p className='form-text'>
-                        Новый пользователь?
+                        {subtitle}
                         <span
                             className='form-link link'
-                            onClick={this.onRegisterPage}
+                            onClick={this.handleChangeForm}
                         >
-                            Зарегистрируйтесь
+                            {linkText}
                         </span>
                     </p>
-
-                    <input
-                        className='LoginForm__input form-input'
-                        type='text'
-                        placeholder='Введите имя пользователя'
-                        id='loginName'
-                        onChange={this.onInputChange}
-                        value={loginName}
-                    />
-                    <label
-                        className='LoginForm__label form-label'
-                        htmlFor='loginName'
+                    <div
+                        className={`LoginForm__inputs-block ${registerFormClass}`}
                     >
-                        Имя пользователя
-                    </label>
-
-                    <input
-                        className='LoginForm__input form-input'
-                        type='password'
-                        placeholder='Введите пароль'
-                        id='loginPassword'
-                        onChange={this.onInputChange}
-                        value={loginPassword}
-                    />
-                    <label
-                        className='LoginForm__label form-label'
-                        htmlFor='loginPassword'
-                    >
-                        Пароль
-                    </label>
+                        {formInputs}
+                    </div>
                     <input
                         className='LoginForm__submit form-submit'
                         type='submit'
-                        value='Войти'
+                        value={submitLabel}
                     />
                 </form>
             </div>

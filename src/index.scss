@@ -1,3 +1,6 @@
+@import './scss/abstracts.scss';
+@import './scss/forms.scss';
+
 *,
 *::after,
 *::before {
@@ -7,18 +10,30 @@
 }
 
 html {
-    font-size: 62.5%;
+    font-size: rem($baseFontSize);
+
+    @include respond(big-desktop) {
+        font-size: rem(18);
+    }
+
+    @include respond(tab-land) {
+        font-size: rem(14);
+    }
+
+    @include respond(tab-port) {
+        font-size: rem(12);
+    }
 }
 
 body {
-    font-size: 1.6rem;
+    font-size: rem(16);
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
     font-weight: 500;
     line-height: 1.75;
 }
 
 .link {
-    color: #1473e6;
+    color: $color-blue;
     text-decoration: none;
     cursor: pointer;
 
@@ -27,102 +42,28 @@ body {
 
 .link:hover,
 .link:visited {
-    color: #1153a3;
-}
-
-.form-input {
-    display: block;
-    width: 100%;
-
-    padding: 0.5rem 0;
-    margin-bottom: 4rem;
-
-    font-size: 1.6rem;
-    line-height: 2.5rem;
-
-    border: none;
-    outline: none;
-    border-bottom: 2px solid #eaeaea;
-}
-
-.form-input:focus {
-    outline: none;
-    border-bottom: 2px solid #1473e6;
-}
-.form-label {
-    display: block;
-    width: 100%;
-
-    font-size: 1.2rem;
-    color: #747474;
-
-    transition: all 0.2s ease;
-    transform: translateY(-3.5rem);
-    opacity: 1;
-}
-
-.form-input:placeholder-shown + .form-label {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(0rem);
-}
-
-.form-submit {
-    display: inline-block;
-    align-self: flex-end;
-
-    padding: 1.6rem 3.5rem;
-
-    background-color: #ffc617;
-    border: none;
-    outline: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-
-    font-size: 2.1rem;
-
-    transition: all 0.2s ease;
-    transform: translateY(0);
-}
-
-.form-submit:hover {
-    background-color: #f8bf15;
-
-    transform: translateY(0.2rem);
+    color: $color-blue-dark;
 }
 
 .city {
     width: 100vw;
     height: 100vh;
+
     display: flex;
     align-items: center;
+
     background-image: linear-gradient(
             to top,
-            rgba(40, 40, 40, 0.75),
-            rgba(40, 40, 40, 0.75)
+            rgba($color-grey-bg, 0.75),
+            rgba($color-grey-bg, 0.75)
         ),
         url('./Login.png');
     background-size: cover;
-}
-.form {
-    max-width: 50rem;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 6rem 5.5rem;
-    border-radius: 0.5rem;
-}
 
-.form-title {
-    font-size: 3.6rem;
-    font-weight: normal;
-    margin-bottom: 2.5rem;
-}
+    padding: rem(40);
 
-.form-text {
-    margin-bottom: 3.5rem;
-}
-
-.form-link {
-    margin-left: 1rem;
+    @include respond(tab-port) {
+        flex-direction: column;
+        justify-content: space-around;
+    }
 }

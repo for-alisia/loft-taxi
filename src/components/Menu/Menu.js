@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { route } from '../../helpers/config';
 import './Menu.scss';
 
 export default class Menu extends Component {
+    static propTypes = {
+        page: PropTypes.oneOf(['MapPage', 'Login', 'Profile']).isRequired
+    };
+
     handleChangePage = e => {
         e.preventDefault();
         const page = e.target.dataset.page;

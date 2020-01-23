@@ -1,35 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Logo from '../../components/Logo';
 import LoginForm from '../../components/LoginForm';
-import RegisterForm from '../../components/RegisterForm';
 import './Login.scss';
 
-export default class Login extends Component {
-    state = {
-        form: LoginForm
-    };
+const Login = props => {
+    return (
+        <div className='Login city'>
+            <Logo />
+            <LoginForm onPageChange={props.onPageChange} />
+        </div>
+    );
+};
 
-    handleFormChange = e => {
-        this.setState(prevState => {
-            const newForm =
-                prevState.form === LoginForm ? RegisterForm : LoginForm;
+Login.propTypes = {
+    onPageChange: PropTypes.func.isRequired
+};
 
-            return {
-                form: newForm
-            };
-        });
-    };
-
-    render() {
-        const { form: Form } = this.state;
-        return (
-            <div className='Login city'>
-                <Logo />
-                <Form
-                    onPageChange={this.props.onPageChange}
-                    onFormChange={this.handleFormChange}
-                />
-            </div>
-        );
-    }
-}
+export default Login;

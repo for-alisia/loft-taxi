@@ -1,34 +1,36 @@
+@import '../../scss/abstracts.scss';
+
 .ProfileCard {
-    min-width: 50rem;
-    min-height: 30rem;
+    min-width: rem(500);
+    min-height: rem(300);
 
-    background-color: #fff;
+    background-color: $color-white;
 
-    border-radius: 0.5rem;
+    border-radius: rem(5);
 
     &__form {
-        max-width: 100rem;
+        max-width: rem(1000);
     }
 
     &__form-text {
         text-align: center;
-        font-size: 1.2rem;
+        font-size: rem(12);
 
-        margin-bottom: 4rem;
+        margin-bottom: rem(40);
     }
 
     &__form-title {
-        font-size: 2.4rem;
+        font-size: rem(24);
         text-align: center;
 
-        margin-bottom: 0.5rem;
+        margin-bottom: rem(5);
     }
 
     &__form-row {
         display: flex;
         justify-content: space-between;
 
-        margin-bottom: 4rem;
+        margin-bottom: rem(4);
     }
 
     &__submit {
@@ -36,7 +38,7 @@
     }
 
     &__input {
-        margin-bottom: 3rem;
+        margin-bottom: rem(3);
     }
 
     &__input--short {
@@ -44,36 +46,36 @@
     }
 
     &__label {
-        transform: translateY(-8.3rem);
+        transform: translateY(-rem(83));
     }
 }
 
 .form-card {
-    width: 38rem;
-    height: 23rem;
+    width: rem(380);
+    height: rem(230);
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    border-radius: 0.5rem;
-    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.16);
+    border-radius: rem(5);
+    box-shadow: 0 0 rem(15) rgba(0, 0, 0, 0.16);
 
-    padding: 5rem 3rem 2rem 3rem;
+    padding: rem(50) rem(30) rem(20) rem(30);
 
     &--front:after {
         content: '';
         display: block;
         position: absolute;
-        top: 2rem;
-        right: 2rem;
-        width: 4.1rem;
-        height: 2.4rem;
+        top: rem(20);
+        right: rem(30);
+        width: rem(41);
+        height: rem(24);
 
         background-image: url('./mastercard.png');
     }
 
     &--back {
-        margin-left: 3.2rem;
+        margin-left: rem(32);
     }
 }

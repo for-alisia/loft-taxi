@@ -1,18 +1,25 @@
+@import '../../scss/abstracts.scss';
+
 .Header {
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
-    background-color: #fff;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: $color-white;
+    box-shadow: 0 rem(5) rem(10) rgba(0, 0, 0, 0.15);
 }
 
 .Header__content {
-    max-width: 120rem;
     margin: 0 auto;
+    padding: rem(10) rem(10);
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
+
     line-height: 1;
+
+    @include respond(tab-port) {
+        padding: rem(5) rem(10);
+    }
 }
