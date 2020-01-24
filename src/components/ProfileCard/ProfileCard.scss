@@ -89,8 +89,12 @@
     }
 }
 
-.cvv-input {
-    background-image: url('./visibility-24px.svg');
-    background-position: right center;
-    background-repeat: no-repeat;
+.form-input-icon.cvv-input {
+    mask-image: url('./visibility_off-24px.svg');
+    background-color: $color-grey-bg;
+}
+
+.form-input-icon.cvv-input-visible {
+    mask-image: url('./visibility-24px.svg');
+    background-color: $color-grey-bg;
 }

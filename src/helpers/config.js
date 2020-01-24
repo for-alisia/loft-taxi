@@ -133,14 +133,19 @@ const formCardData = {
             },
             id: 2,
             name: 'expireDate',
-            errorMsg: 'Укажите дату в формате ММ.ГГ'
+            errorMsg: 'Дата в формате ММ.ГГ'
         },
         {
             type: 'text',
             placeholder: 'Имя владельца карты',
             label: 'Имя владельца карты',
             id: 3,
-            name: 'ownerName'
+            validation: {
+                latin: true,
+                minLength: 5
+            },
+            name: 'ownerName',
+            errorMsg: 'Введите имя латинскими буквами, как на карте'
         },
         {
             type: 'password',
@@ -151,14 +156,32 @@ const formCardData = {
             },
             id: 4,
             name: 'cvv',
-            errorMsg: 'Введите CVV с обратной стороны карты',
+            errorMsg: 'Введите CVV',
             classes: 'cvv-input'
         }
     ]
 };
 
 const formOrderData = {
-    submitLabel: 'Вызвать такси'
+    submitLabel: 'Вызвать такси',
+    inputs: [
+        {
+            type: 'text',
+            placeholder: 'Откуда',
+            label: 'Откуда',
+            id: 1,
+            name: 'taxiFrom',
+            classes: 'taxi-input'
+        },
+        {
+            type: 'text',
+            placeholder: 'Куда',
+            label: 'Куда',
+            id: 2,
+            name: 'taxiTo',
+            classes: 'taxi-input'
+        }
+    ]
 };
 
 export {

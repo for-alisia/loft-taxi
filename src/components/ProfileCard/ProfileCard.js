@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { formCardData } from '../../helpers/config';
-import { updateStateInputs, validateInput } from '../../helpers/functions';
+import {
+    updateStateInputs,
+    validateInput,
+    createInputs,
+    defineNewInputValue,
+    clearInput
+} from '../../helpers/functions';
 import Input from '../Input';
 import './ProfileCard.scss';
 
@@ -15,8 +21,7 @@ export default class ProfileCard extends Component {
     }
 
     handleInputChange = (e, name) => {
-        const currentInput = { ...this.state[name] };
-        currentInput.value = e.target.value;
+        const currentInput = defineNewInputValue(e, name, this.state);
         this.setState({
             [name]: currentInput
         });
@@ -30,6 +35,13 @@ export default class ProfileCard extends Component {
         });
     };
 
+    handleClearInput = (e, name) => {
+        const currentInput = clearInput(name, this.state);
+        this.setState({
+            [name]: currentInput
+        });
+    };
+
     onSubmit = e => {
         e.preventDefault();
         this.props.onPageChange('MapPage');
@@ -38,35 +50,14 @@ export default class ProfileCard extends Component {
     render() {
         const { title, subtitle, submitLabel, inputs } = this.state.data;
 
-        const formInputs = inputs.map(({ name }) => {
-            const {
-                type,
-                placeholder,
-                label,
-                id,
-                value,
-                errorMsg,
-                hasError,
-                validation,
-                classes
-            } = this.state[name];
-            return (
-                <Input
-                    type={type}
-                    placeholder={placeholder}
-                    label={label}
-                    key={id}
-                    name={name}
-                    value={value}
-                    onInputChange={e => this.handleInputChange(e, name)}
-                    errorMsg={errorMsg}
-                    onBlur={e => this.handleInputBlur(e, name)}
-                    hasError={hasError}
-                    validation={validation}
-                    classes={classes}
-                />
-            );
-        });
+        const formInputs = createInputs(
+            inputs,
+            Input,
+            this.state,
+            this.handleInputChange,
+            this.handleInputBlur,
+            this.handleClearInput
+        );
         const frontSideInputs = formInputs.slice(0, 2);
         const backSideInputs = formInputs.slice(2);
 

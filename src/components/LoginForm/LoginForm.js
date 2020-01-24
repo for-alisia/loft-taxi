@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formLoginData, formRegisterData } from '../../helpers/config';
 import Input from '../Input';
+import CustomButton from '../CustomButton';
 import { AuthContext } from '../../helpers/context';
-import { updateStateInputs, validateInput } from '../../helpers/functions';
+import {
+    updateStateInputs,
+    validateInput,
+    createInputs,
+    defineNewInputValue,
+    clearInput
+} from '../../helpers/functions';
+import { signInWithGoogle } from '../../firebase/firebase-utils';
 import './LoginForm.scss';
 
 export default class LoginForm extends Component {
@@ -23,10 +31,11 @@ export default class LoginForm extends Component {
         onPageChange: PropTypes.func
     };
 
-    handleSubmit = e => {
+    handleSubmit = async e => {
         e.preventDefault();
 
         let isValid = true;
+        const { login, signUp } = this.context;
         const currentForm = this.state.data;
         const inputs = currentForm.inputs.map(({ name }) => name);
         inputs.forEach(name => {
@@ -35,9 +44,26 @@ export default class LoginForm extends Component {
             }
         });
 
-        console.log(isValid);
+        if (isValid && currentForm === formLoginData) {
+            const { userName, userPassword } = this.state;
 
-        this.props.onPageChange('MapPage');
+            const loginResult = await login(userName.value, userPassword.value);
+
+            if (loginResult) {
+                this.setState({
+                    errorAuth: loginResult.code
+                });
+            }
+        }
+        if (isValid && currentForm === formRegisterData) {
+            const { email, password, firstName, lastName } = this.state;
+
+            const additionalData = {
+                displayName: `${firstName.value} ${lastName.value || ''}`
+            };
+
+            signUp(email.value, password.value, additionalData);
+        }
     };
 
     handleChangeForm = e => {
@@ -55,20 +81,31 @@ export default class LoginForm extends Component {
     };
 
     handleInputChange = (e, name) => {
-        const currentInput = { ...this.state[name] };
-        currentInput.value = e.target.value;
+        const currentInput = defineNewInputValue(e, name, this.state);
         this.setState({
             [name]: currentInput
         });
     };
 
-    handleInputBlur(e, name) {
+    handleInputBlur = (e, name) => {
         const currentInput = validateInput(this.state[name]);
 
         this.setState({
             [name]: currentInput
         });
-    }
+    };
+
+    handleClearInput = (e, name) => {
+        const currentInput = clearInput(name, this.state);
+        this.setState({
+            [name]: currentInput
+        });
+    };
+
+    handleGoogleClick = e => {
+        e.preventDefault();
+        signInWithGoogle();
+    };
 
     render() {
         const {
@@ -79,38 +116,17 @@ export default class LoginForm extends Component {
             inputs
         } = this.state.data;
 
-        const formInputs = inputs.map(({ name }) => {
-            const {
-                type,
-                placeholder,
-                label,
-                id,
-                value,
-                errorMsg,
-                hasError,
-                validation
-            } = this.state[name];
-            return (
-                <Input
-                    type={type}
-                    placeholder={placeholder}
-                    label={label}
-                    key={id}
-                    name={name}
-                    value={value}
-                    onInputChange={e => this.handleInputChange(e, name)}
-                    errorMsg={errorMsg}
-                    onBlur={e => this.handleInputBlur(e, name)}
-                    hasError={hasError}
-                    validation={validation}
-                />
-            );
-        });
+        const formInputs = createInputs(
+            inputs,
+            Input,
+            this.state,
+            this.handleInputChange,
+            this.handleInputBlur,
+            this.handleClearInput
+        );
 
         const registerFormClass =
             this.state.data === formRegisterData ? 'register-form' : '';
-
-        const { isLogined } = this.context;
 
         return (
             <div className='LoginForm'>
@@ -119,9 +135,13 @@ export default class LoginForm extends Component {
                     onSubmit={this.handleSubmit}
                 >
                     <h2 className='form-title'>{title}</h2>
-                    <span>
-                        {isLogined ? 'Вы залогинены' : 'Вы не залогинены'}
-                    </span>
+
+                    {this.state.errorAuth ? (
+                        <span className='error'>
+                            Вы ввели неверный логин или пароль
+                        </span>
+                    ) : null}
+
                     <p className='form-text'>
                         {subtitle}
                         <span
@@ -136,11 +156,15 @@ export default class LoginForm extends Component {
                     >
                         {formInputs}
                     </div>
-                    <input
-                        className='LoginForm__submit form-submit'
-                        type='submit'
-                        value={submitLabel}
-                    />
+                    <div className='btn-wrapper'>
+                        <CustomButton type='submit'>{submitLabel}</CustomButton>
+                        <CustomButton
+                            classes='inverse-btn'
+                            handleClick={this.handleGoogleClick}
+                        >
+                            Войти с Google
+                        </CustomButton>
+                    </div>
                 </form>
             </div>
         );

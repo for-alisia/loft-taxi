@@ -12,11 +12,15 @@
         max-width: 100%;
     }
 
-    .form-submit {
-        display: inline-block;
-        align-self: flex-end;
+    .btn-wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
 
+    .form-submit {
         padding: rem(16) rem(35);
+        margin-bottom: rem(10);
 
         background-color: $color-orange;
         border: none;
@@ -32,6 +36,11 @@
         @include respond(tab-port) {
             align-self: center;
             font-size: rem(18);
+        }
+
+        &.inverse-btn {
+            background-color: transparent;
+            border: 2px solid $color-orange;
         }
     }
 

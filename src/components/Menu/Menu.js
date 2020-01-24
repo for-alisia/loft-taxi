@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { route } from '../../helpers/config';
+import { AuthContext } from '../../helpers/context';
+import { auth } from '../../firebase/firebase-utils';
 import './Menu.scss';
 
 export default class Menu extends Component {
@@ -8,10 +10,15 @@ export default class Menu extends Component {
         page: PropTypes.oneOf(['MapPage', 'Login', 'Profile']).isRequired
     };
 
-    handleChangePage = e => {
+    static contextType = AuthContext;
+
+    handleChangePage = (e, name) => {
         e.preventDefault();
-        const page = e.target.dataset.page;
-        this.props.onPageChange(page);
+        if (name === 'Login') {
+            auth.signOut();
+        }
+
+        this.props.onPageChange(name);
     };
 
     render() {
@@ -26,8 +33,7 @@ export default class Menu extends Component {
                 <button
                     className={className.join(' ')}
                     key={name}
-                    data-page={name}
-                    onClick={this.handleChangePage}
+                    onClick={e => this.handleChangePage(e, name)}
                 >
                     {label}
                 </button>

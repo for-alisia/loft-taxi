@@ -9,6 +9,7 @@ const Input = ({
     errorMsg,
     validation,
     classes,
+    onClearInput,
     ...otherProps
 }) => {
     const inputId = `input${Math.random()}`;
@@ -17,10 +18,6 @@ const Input = ({
 
     if (hasError) {
         className.push('invalid');
-    }
-
-    if (classes) {
-        className.push(classes);
     }
 
     return (
@@ -34,6 +31,10 @@ const Input = ({
             <label className='form-label' htmlFor={inputId}>
                 {label}
                 {validation ? <span>*</span> : null}
+                <i
+                    className={`form-input-icon ${classes}`}
+                    onClick={onClearInput}
+                ></i>
             </label>
             {isInvalid ? (
                 <span className='form-input-error'>{errorMsg}</span>
@@ -44,6 +45,7 @@ const Input = ({
 
 Input.propTypes = {
     onInputChange: PropTypes.func,
+    onClearInput: PropTypes.func,
     label: PropTypes.string,
     hasError: PropTypes.bool,
     errorMsg: PropTypes.string,

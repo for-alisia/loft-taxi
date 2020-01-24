@@ -18,6 +18,8 @@
     outline: none;
     border-bottom: 2px solid $color-grey;
 
+    transition: all 0.3s ease;
+
     &:focus {
         outline: none;
         border-bottom: 2px solid $color-blue;
@@ -29,6 +31,10 @@
 
     &.invalid + .form-label {
         color: $color-red;
+    }
+
+    &:hover {
+        border-color: $color-grey-bg;
     }
 }
 
@@ -42,6 +48,24 @@
     transition: all 0.2s ease;
     transform: translateY(-3rem);
     opacity: 1;
+
+    .form-input-icon {
+        display: block;
+        width: rem(24);
+        height: rem(24);
+        position: absolute;
+        top: rem(15);
+        right: 0;
+
+        mask-image: url('./clear-24px.svg');
+        background-color: $color-grey-bg;
+
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-red;
+        }
+    }
 }
 
 .form-input:placeholder-shown + .form-label {
