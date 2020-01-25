@@ -10,6 +10,9 @@
     @include respond(phone) {
         width: 100%;
     }
+    .register-form + .btn-wrapper {
+        justify-content: flex-end;
+    }
 
     .register-form .form-input-wrapper:nth-child(2),
     .register-form .form-input-wrapper:nth-child(3) {

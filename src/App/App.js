@@ -42,8 +42,11 @@ export default class extends Component {
                     this.setState({ authData: newAuthData, page, pageName });
                 });
             } else {
+                const newAuthData = { ...this.state.authData };
+                newAuthData.currentUser = null;
+                newAuthData.isLogined = false;
                 this.setState({
-                    currentUser: userAuth
+                    authData: newAuthData
                 });
             }
         });

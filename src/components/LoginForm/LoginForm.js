@@ -125,8 +125,10 @@ export default class LoginForm extends Component {
             this.handleClearInput
         );
 
-        const registerFormClass =
-            this.state.data === formRegisterData ? 'register-form' : '';
+        const extFormClass =
+            this.state.data === formRegisterData
+                ? 'register-form'
+                : 'login-form';
 
         return (
             <div className='LoginForm'>
@@ -151,19 +153,19 @@ export default class LoginForm extends Component {
                             {linkText}
                         </span>
                     </p>
-                    <div
-                        className={`LoginForm__inputs-block ${registerFormClass}`}
-                    >
+                    <div className={`LoginForm__inputs-block ${extFormClass}`}>
                         {formInputs}
                     </div>
                     <div className='btn-wrapper'>
                         <CustomButton type='submit'>{submitLabel}</CustomButton>
-                        <CustomButton
-                            classes='inverse-btn'
-                            handleClick={this.handleGoogleClick}
-                        >
-                            Войти с Google
-                        </CustomButton>
+                        {this.state.data === formLoginData ? (
+                            <CustomButton
+                                classes='inverse-btn'
+                                handleClick={this.handleGoogleClick}
+                            >
+                                Войти с Google
+                            </CustomButton>
+                        ) : null}
                     </div>
                 </form>
             </div>

@@ -9,7 +9,7 @@ export const login = async (email, password) => {
 };
 
 export const logout = async () => {
-    console.log('logout');
+    auth.signOut();
 };
 
 export const signUp = async (email, password, additionalData) => {
