@@ -25,4 +25,170 @@ const route = {
 
 const initialPage = route.Login;
 
-export { route, initialPage };
+const formLoginData = {
+    title: 'Войти',
+    subtitle: 'Новый пользователь?',
+    linkText: 'Зарегистрируйтесь',
+    submitLabel: 'Войти',
+    inputs: [
+        {
+            type: 'text',
+            placeholder: 'Введите имя пользователя',
+            label: 'Имя пользователя',
+            required: true,
+            validation: {
+                required: true
+            },
+            id: 1,
+            name: 'userName',
+            errorMsg:
+                'Введите имя пользователя или email, указанный при регистрации'
+        },
+        {
+            type: 'password',
+            placeholder: 'Введите пароль',
+            label: 'Пароль',
+            required: true,
+            validation: {
+                minLength: 6
+            },
+            id: 2,
+            name: 'userPassword',
+            errorMsg: 'Введите корректный пароль не менее 6 символов'
+        }
+    ]
+};
+
+const formRegisterData = {
+    title: 'Регистрация',
+    subtitle: 'Уже зарегистрирован?',
+    linkText: 'Войти',
+    submitLabel: 'Зарегистрироваться',
+    inputs: [
+        {
+            type: 'email',
+            placeholder: 'Введите email',
+            label: 'Email',
+            validation: {
+                email: true
+            },
+            id: 1,
+            name: 'email',
+            errorMsg: 'Введите корректный email'
+        },
+        {
+            type: 'text',
+            placeholder: 'Ваше имя',
+            label: 'Ваше имя',
+            validation: {
+                required: true
+            },
+            id: 2,
+            name: 'firstName',
+            errorMsg: 'Введите имя'
+        },
+        {
+            type: 'text',
+            placeholder: 'Ваша фамилия',
+            label: 'Ваша фамилия',
+            id: 3,
+            name: 'lastName'
+        },
+        {
+            type: 'password',
+            placeholder: 'Придумайте пароль',
+            label: 'Пароль',
+            validation: {
+                minLength: 6
+            },
+            id: 4,
+            name: 'password',
+            errorMsg: 'Пароль должен быть не менее 6 символов'
+        }
+    ]
+};
+
+const formCardData = {
+    title: 'Способы оплаты',
+    subtitle: 'Заполните данные карты для оплаты',
+    submitLabel: 'Сохранить',
+    inputs: [
+        {
+            type: 'text',
+            placeholder: 'Введите номер карты',
+            label: 'Номер карты',
+            validation: {
+                cardNumber: true
+            },
+            id: 1,
+            name: 'cardNumber',
+            errorMsg: 'Введите корректный номер карты'
+        },
+        {
+            type: 'text',
+            placeholder: 'Срок действия',
+            label: 'Срок действия',
+            validation: {
+                date: true
+            },
+            id: 2,
+            name: 'expireDate',
+            errorMsg: 'Дата в формате ММ.ГГ'
+        },
+        {
+            type: 'text',
+            placeholder: 'Имя владельца карты',
+            label: 'Имя владельца карты',
+            id: 3,
+            validation: {
+                latin: true,
+                minLength: 5
+            },
+            name: 'ownerName',
+            errorMsg: 'Введите имя латинскими буквами, как на карте'
+        },
+        {
+            type: 'password',
+            placeholder: 'CVV',
+            label: 'CVV',
+            validation: {
+                length: 3
+            },
+            id: 4,
+            name: 'cvv',
+            errorMsg: 'Введите CVV',
+            classes: 'cvv-input'
+        }
+    ]
+};
+
+const formOrderData = {
+    submitLabel: 'Вызвать такси',
+    inputs: [
+        {
+            type: 'text',
+            placeholder: 'Откуда',
+            label: 'Откуда',
+            id: 1,
+            name: 'taxiFrom',
+            classes: 'taxi-input'
+        },
+        {
+            type: 'text',
+            placeholder: 'Куда',
+            label: 'Куда',
+            id: 2,
+            name: 'taxiTo',
+            classes: 'taxi-input'
+        }
+    ]
+};
+
+export {
+    route,
+    initialPage,
+    formLoginData,
+    formRegisterData,
+    formOrderData,
+    formCardData
+};

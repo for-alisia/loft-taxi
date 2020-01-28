@@ -1,16 +1,45 @@
 import React, { Component } from 'react';
+import { formCardData } from '../../helpers/config';
+import {
+    updateStateInputs,
+    validateInput,
+    createInputs,
+    defineNewInputValue,
+    clearInput
+} from '../../helpers/functions';
+import Input from '../Input';
 import './ProfileCard.scss';
 
 export default class ProfileCard extends Component {
-    state = {
-        profileCardNumber: '',
-        profileCardDateExpire: '',
-        profileCardName: '',
-        profileCardCVC: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: formCardData
+        };
+
+        updateStateInputs(this.state.data, this.state);
+    }
+
+    handleInputChange = (e, name) => {
+        const currentInput = defineNewInputValue(e, name, this.state);
+        this.setState({
+            [name]: currentInput
+        });
     };
 
-    onInputChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
+    handleInputBlur = (e, name) => {
+        const currentInput = validateInput(this.state[name]);
+
+        this.setState({
+            [name]: currentInput
+        });
+    };
+
+    handleClearInput = (e, name) => {
+        const currentInput = clearInput(name, this.state);
+        this.setState({
+            [name]: currentInput
+        });
     };
 
     onSubmit = e => {
@@ -19,12 +48,19 @@ export default class ProfileCard extends Component {
     };
 
     render() {
-        const {
-            profileCardNumber,
-            profileCardDateExpire,
-            profileCardName,
-            profileCardCVC
-        } = this.state;
+        const { title, subtitle, submitLabel, inputs } = this.state.data;
+
+        const formInputs = createInputs(
+            inputs,
+            Input,
+            this.state,
+            this.handleInputChange,
+            this.handleInputBlur,
+            this.handleClearInput
+        );
+        const frontSideInputs = formInputs.slice(0, 2);
+        const backSideInputs = formInputs.slice(2);
+
         return (
             <div className='ProfileCard'>
                 <form
@@ -32,78 +68,24 @@ export default class ProfileCard extends Component {
                     onSubmit={this.onSubmit}
                 >
                     <h2 className='ProfileCard__form-title form-title'>
-                        Способ оплаты
+                        {title}
                     </h2>
                     <p className='ProfileCard__form-text form-text'>
-                        Заполните данные карты для оплаты
+                        {subtitle}
                     </p>
 
                     <div className='ProfileCard__form-row'>
                         <div className='ProfileCard__form-card form-card form-card--front'>
-                            <input
-                                className='ProfileCard__input form-input'
-                                type='text'
-                                placeholder='Введите номер карты'
-                                id='profileCardNumber'
-                                onChange={this.onInputChange}
-                                value={profileCardNumber}
-                            />
-                            <label
-                                className='ProfileCard__label form-label'
-                                htmlFor='profileCardNumber'
-                            >
-                                Номер карты:
-                            </label>
-                            <input
-                                className='ProfileCard__input ProfileCard__input--short form-input'
-                                type='text'
-                                placeholder='Срок действия'
-                                id='profileCardDateExpire'
-                                onChange={this.onInputChange}
-                                value={profileCardDateExpire}
-                            />
-                            <label
-                                className='ProfileCard__label form-label'
-                                htmlFor='profileCardDateExpire'
-                            >
-                                Срок действия:
-                            </label>
+                            {frontSideInputs}
                         </div>
                         <div className='ProfileCard__form-card form-card form-card--back'>
-                            <input
-                                className='ProfileCard__input form-input'
-                                type='text'
-                                placeholder='Введите имя владельца'
-                                id='profileCardName'
-                                onChange={this.onInputChange}
-                                value={profileCardName}
-                            />
-                            <label
-                                className='ProfileCard__label form-label'
-                                htmlFor='profileCardName'
-                            >
-                                Имя владельца
-                            </label>
-                            <input
-                                className='ProfileCard__input form-input ProfileCard__input--short'
-                                type='text'
-                                placeholder='CVC'
-                                id='profileCardCVC'
-                                onChange={this.onInputChange}
-                                value={profileCardCVC}
-                            />
-                            <label
-                                className='ProfileCard__label form-label'
-                                htmlFor='profileCardCVC'
-                            >
-                                CVC
-                            </label>
+                            {backSideInputs}
                         </div>
                     </div>
                     <input
                         className='ProfileCard__submit form-submit'
                         type='submit'
-                        value='Сохранить'
+                        value={submitLabel}
                     />
                 </form>
             </div>

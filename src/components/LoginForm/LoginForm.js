@@ -1,76 +1,172 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { formLoginData, formRegisterData } from '../../helpers/config';
+import Input from '../Input';
+import CustomButton from '../CustomButton';
+import { AuthContext } from '../../helpers/context';
+import {
+    updateStateInputs,
+    validateInput,
+    createInputs,
+    defineNewInputValue,
+    clearInput
+} from '../../helpers/functions';
+import { signInWithGoogle } from '../../firebase/firebase-utils';
 import './LoginForm.scss';
 
 export default class LoginForm extends Component {
-    state = {
-        loginName: '',
-        loginPassword: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: formLoginData
+        };
+
+        updateStateInputs(formLoginData, this.state);
+        updateStateInputs(formRegisterData, this.state);
+    }
+
+    static contextType = AuthContext;
+
+    static propTypes = {
+        onPageChange: PropTypes.func
     };
 
-    onSubmit = e => {
+    handleSubmit = async e => {
         e.preventDefault();
-        this.props.onPageChange('MapPage');
+
+        let isValid = true;
+        const { login, signUp } = this.context;
+        const currentForm = this.state.data;
+        const inputs = currentForm.inputs.map(({ name }) => name);
+        inputs.forEach(name => {
+            if (!this.state[name].isValid) {
+                isValid = false;
+            }
+        });
+
+        if (isValid && currentForm === formLoginData) {
+            const { userName, userPassword } = this.state;
+
+            const loginResult = await login(userName.value, userPassword.value);
+
+            if (loginResult) {
+                this.setState({
+                    errorAuth: loginResult.code
+                });
+            }
+        }
+        if (isValid && currentForm === formRegisterData) {
+            const { email, password, firstName, lastName } = this.state;
+
+            const additionalData = {
+                displayName: `${firstName.value} ${lastName.value || ''}`
+            };
+
+            signUp(email.value, password.value, additionalData);
+        }
     };
 
-    onRegisterPage = e => {
+    handleChangeForm = e => {
         e.preventDefault();
-        this.props.onFormChange();
+        this.setState(prevState => {
+            const newData =
+                prevState.data === formLoginData
+                    ? formRegisterData
+                    : formLoginData;
+
+            return {
+                data: newData
+            };
+        });
     };
 
-    onInputChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
+    handleInputChange = (e, name) => {
+        const currentInput = defineNewInputValue(e, name, this.state);
+        this.setState({
+            [name]: currentInput
+        });
+    };
+
+    handleInputBlur = (e, name) => {
+        const currentInput = validateInput(this.state[name]);
+
+        this.setState({
+            [name]: currentInput
+        });
+    };
+
+    handleClearInput = (e, name) => {
+        const currentInput = clearInput(name, this.state);
+        this.setState({
+            [name]: currentInput
+        });
+    };
+
+    handleGoogleClick = e => {
+        e.preventDefault();
+        signInWithGoogle();
     };
 
     render() {
-        const { loginName, loginPassword } = this.state;
+        const {
+            title,
+            subtitle,
+            linkText,
+            submitLabel,
+            inputs
+        } = this.state.data;
+
+        const formInputs = createInputs(
+            inputs,
+            Input,
+            this.state,
+            this.handleInputChange,
+            this.handleInputBlur,
+            this.handleClearInput
+        );
+
+        const extFormClass =
+            this.state.data === formRegisterData
+                ? 'register-form'
+                : 'login-form';
+
         return (
             <div className='LoginForm'>
-                <form className='LoginForm__form form' onSubmit={this.onSubmit}>
-                    <h2 className='form-title'>Войти</h2>
+                <form
+                    className='LoginForm__form form'
+                    onSubmit={this.handleSubmit}
+                >
+                    <h2 className='form-title'>{title}</h2>
+
+                    {this.state.errorAuth ? (
+                        <span className='error'>
+                            Вы ввели неверный логин или пароль
+                        </span>
+                    ) : null}
+
                     <p className='form-text'>
-                        Новый пользователь?
+                        {subtitle}
                         <span
                             className='form-link link'
-                            onClick={this.onRegisterPage}
+                            onClick={this.handleChangeForm}
                         >
-                            Зарегистрируйтесь
+                            {linkText}
                         </span>
                     </p>
-
-                    <input
-                        className='LoginForm__input form-input'
-                        type='text'
-                        placeholder='Введите имя пользователя'
-                        id='loginName'
-                        onChange={this.onInputChange}
-                        value={loginName}
-                    />
-                    <label
-                        className='LoginForm__label form-label'
-                        htmlFor='loginName'
-                    >
-                        Имя пользователя
-                    </label>
-
-                    <input
-                        className='LoginForm__input form-input'
-                        type='password'
-                        placeholder='Введите пароль'
-                        id='loginPassword'
-                        onChange={this.onInputChange}
-                        value={loginPassword}
-                    />
-                    <label
-                        className='LoginForm__label form-label'
-                        htmlFor='loginPassword'
-                    >
-                        Пароль
-                    </label>
-                    <input
-                        className='LoginForm__submit form-submit'
-                        type='submit'
-                        value='Войти'
-                    />
+                    <div className={`LoginForm__inputs-block ${extFormClass}`}>
+                        {formInputs}
+                    </div>
+                    <div className='btn-wrapper'>
+                        <CustomButton type='submit'>{submitLabel}</CustomButton>
+                        {this.state.data === formLoginData ? (
+                            <CustomButton
+                                classes='inverse-btn'
+                                handleClick={this.handleGoogleClick}
+                            >
+                                Войти с Google
+                            </CustomButton>
+                        ) : null}
+                    </div>
                 </form>
             </div>
         );

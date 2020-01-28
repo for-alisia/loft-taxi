@@ -1,0 +1,85 @@
+@import '../../scss/abstracts.scss';
+.form-input-wrapper {
+    margin-bottom: rem(40);
+
+    position: relative;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+
+    padding: rem(5) 0;
+
+    font-size: rem(16);
+    line-height: rem(25);
+
+    border: none;
+    outline: none;
+    border-bottom: 2px solid $color-grey;
+
+    transition: all 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid $color-blue;
+    }
+
+    &.invalid {
+        border-color: $color-red;
+    }
+
+    &.invalid + .form-label {
+        color: $color-red;
+    }
+
+    &:hover {
+        border-color: $color-grey-bg;
+    }
+}
+
+.form-label {
+    display: block;
+    width: 100%;
+
+    font-size: rem(12);
+    color: $color-grey-dark;
+
+    transition: all 0.2s ease;
+    transform: translateY(-3rem);
+    opacity: 1;
+
+    .form-input-icon {
+        display: block;
+        width: rem(24);
+        height: rem(24);
+        position: absolute;
+        top: rem(15);
+        right: 0;
+
+        mask-image: url('./clear-24px.svg');
+        background-color: $color-grey-bg;
+
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-red;
+        }
+    }
+}
+
+.form-input:placeholder-shown + .form-label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0rem);
+}
+
+.form-input-error {
+    position: absolute;
+
+    color: $color-red;
+    font-size: rem(12);
+
+    bottom: -0.5rem;
+    left: 0;
+}
